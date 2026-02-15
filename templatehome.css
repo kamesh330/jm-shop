@@ -255,21 +255,28 @@
         }
 
         .offerimg--1 {
+            transform: translatex(100%);
             background-image: url('bagwithkit-3645694901.jpg') !important;
         }
 
         /* Stadium/Bat */
         .offerimg--2 {
+            transform: translatex(200%);
+
             background-image: url('gift-card-discount-voucher-red-and-white-ad-b-design-template-03619d51d23d10ba0ff17247045e9a41_screen.jpg') !important;
         }
 
         /* Red Ball on Grass */
         .offerimg--3 {
+            transform: translatex(300%);
+
             background-image: url('gift-card-template-3d-illustration-260nw-2227669727.webp') !important;
         }
 
         /* Cricket Gear/Shoes */
         .offerimg--4 {
+            transform: translatex(400%);
+
             background-image: url('bagwithkit-3645694901.jpg') !important;
         }
 
@@ -301,6 +308,15 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(5px);
             transition: 0.3s;
+        }
+
+        .prebtn:hover,
+        .nextbtn:hover {
+            background-color: #e60000;
+            color: white;
+            backdrop-filter: blur(5px);
+            transform: translateY(-50%) scale(1.1);
+            
         }
 
         .prebtn {
