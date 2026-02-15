@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Friday Bonanza | Exclusive Deals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="templatehome.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Black Friday</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="offertiming-section">
+            <h2>50% OFF</h2>
+            <h1>BLACK FRIDAY SALE</h1>
+            <div class="timer" id="countdown">
+                <div class="timer-block"><span id="days">00</span><label>Days</label></div>
+                <div class="timer-block"><span id="hours">00</span><label>Hours</label></div>
+                <div class="timer-block"><span id="minutes">00</span><label>Mins</label></div>
+                <div class="timer-block"><span id="seconds">00</span><label>Secs</label></div>
+            </div>
+            <a href="#shop" class="btn">DISCOVER DEALS</a>
+        </div>
+        <span class="prebtn">⬅</span>
+        <div class=" offerimg offerimg--1"></div>
+        <div class=" offerimg offerimg--2"></div>
+        <div class=" offerimg offerimg--3"></div>
+        <div class=" offerimg offerimg--4"></div>
+        <span class="nextbtn">➡</span>
+    </section>
+
+    <section class="section" id="shop">
+        <div class="section-title">
+            <h2>Flash Deals</h2>
+            <p>Limited Time, Massive Savings!</p>
+        </div>
+        <div class="deals-grid">
+            <div class="product-card">
+                <span class="sale-badge">-36%</span>
+                <img src="Cricket-Batting-Gloves-Transparent-Image-2541882821.png"
+                    alt="Watch">
+                <h3>Chronos Vanguard Watch</h3>
+                <p><del>$155.00</del> <strong>$99.00</strong></p>
+                <button class="btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <span class="sale-badge">-29%</span>
+                <img src="Untitled-1.jpgbas1_1c5dd946-500a-4436-8629-81c4435f78ba_2048x-3174265059.jpg"
+                    alt="Skincare">
+                <h3>Apex Men's Skincare</h3>
+                <p><del>$140.00</del> <strong>$99.00</strong></p>
+                <button class="btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <span class="sale-badge">-26%</span>
+                <img src="cricket_PNG118-6932735.png"
+                    alt="Hair Mask">
+                <h3>Silvara Hair Mask</h3>
+                <p><del>$95.00</del> <strong>$70.00</strong></p>
+                <button class="btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="banner-grid">
+        <div class="banner-box bat-banner">
+            <h3>Up to 65% Off</h3>
+            <h2>Bat Collection</h2>
+            <a href="#" class="btn" style="width: fit-content; margin-top: 15px;">Shop Now</a>
+        </div>
+        <div class="banner-box kit-banner">
+            <h3>Up to 65% Off</h3>
+            <h2>kitbage Collection</h2>
+            <a href="#" class="btn" style="width: fit-content; margin-top: 15px;">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-item">
+            <i class="fas fa-truck"></i>
+            <h4>Free Shipping</h4>
+            <p>On orders over $50</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-lock"></i>
+            <h4>Secure Payment</h4>
+            <p>100% Secure transactions</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-undo"></i>
+            <h4>Easy Returns</h4>
+            <p>30-day return policy</p>
+        </div>
+    </section>
+
+    <script>
+        // Countdown Timer Logic
+
+        const preBtn = document.querySelector('.prebtn');
+        const nextBtn = document.querySelector('.nextbtn');
+        var currentIndex = 0;
+
+        function sliderimage(currindex) {
+            const offerimg = document.querySelectorAll('.offerimg');
+            console.log("curr=", currindex);
+
+            offerimg.forEach((img, index) => {
+                img.style.transform = `translatex(${(index - currindex) * 100}%)`;
+                console.log(`translatex(${(index - currindex) * 100})`);
+                console.log("index=", index);
+                console.log(img);
+
+            })
+        }
+
+        preBtn.addEventListener('click', () => {
+            currentIndex = currentIndex - 1;
+            if (currentIndex < 0) {
+                currentIndex = 4;
+            }
+            console.log(currentIndex);
+
+            sliderimage(currentIndex);
+        })
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = currentIndex + 1;
+            if (currentIndex > 4) {
+                currentIndex = 0;
+            }
+            console.log(currentIndex);
+            sliderimage(currentIndex);
+
+        })
+
+
+        function updateTimer() {
+            const saleDate = new Date("Feb 17, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = saleDate - now;
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = d;
+            document.getElementById("hours").innerHTML = h;
+            document.getElementById("minutes").innerHTML = m;
+            document.getElementById("seconds").innerHTML = s;
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer(); // Initial call
+    </script>
+</body>
+
+</html>
