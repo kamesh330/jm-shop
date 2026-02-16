@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHub - Advanced Cart Logic</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* ... Your CSS remains the same ... */
+        :root { --primary: #000000; --accent: #e60000; --text-muted: #666; --bg-light: #f9f9f9; --white: #ffffff; --shadow: 0 2px 8px rgba(0, 0, 0, 0.1); --transition: all 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-light); color: var(--primary); line-height: 1.6; }
+        .navbar { background: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; padding: 1rem 0; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 700; text-decoration: none; color: var(--primary); }
+        .logo span { color: var(--accent); }
+        .cart-icon { cursor: pointer; position: relative; font-size: 1.5rem; }
+        .cart-count { position: absolute; top: -10px; right: -10px; background: var(--accent); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+        .filter-section { background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 2rem; }
+        .slider-wrapper { position: relative; height: 40px; margin: 10px 0; }
+        .slider-wrapper input[type="range"] { position: absolute; width: 100%; pointer-events: none; -webkit-appearance: none; z-index: 2; background: none; }
+        .slider-wrapper input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; pointer-events: auto; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem; }
+        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); }
+        .product-image { width: 100%; height: 200px; object-fit: cover; }
+        .product-info { padding: 1.5rem; }
+        .product-price { color: var(--accent); font-weight: 700; font-size: 1.2rem; }
+        .add-to-cart-btn { width: 100%; padding: 0.8rem; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem; font-weight: 600; }
+        .add-to-cart-btn.in-cart { background: #555; cursor: default; }
+        .cart-sidebar { position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background: white; box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); z-index: 2000; transition: 0.3s; display: flex; flex-direction: column; }
+        .cart-sidebar.active { right: 0; }
+        .cart-header { padding: 1.5rem; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; padding: 1rem; overflow-y: auto; }
+        .cart-item { display: flex; align-items: center; border-bottom: 1px solid #eee; padding: 1rem 0; gap: 12px; }
+        .cart-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+        .cart-controls { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+        .qty-btn { width: 25px; height: 25px; border: 1px solid #ddd; background: white; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
+        .delete-text-btn { color: var(--accent); background: none; border: none; cursor: pointer; font-size: 0.8rem; text-decoration: underline; margin-left: auto; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 3000; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 500px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group input { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; }
+        .submit-btn { width: 100%; padding: 1rem; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Jm Spo<span>rts coner</span></a>
+            <div class="cart-icon" id="cartIcon">🛒 <span class="cart-count" id="cartCount">0</span></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="filter-section">
+            <input type="text" id="searchInput" placeholder="Search products..." style="width:100%; padding:12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ddd;">
+            <div class="price-label">Price: <span id="priceDisplay" style="font-weight: bold;">$0 - $500</span></div>
+            <div class="slider-wrapper">
+                <input type="range" id="minPrice" min="0" max="500" value="0">
+                <input type="range" id="maxPrice" min="0" max="500" value="500">
+            </div>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Cart</h3>
+            <button id="cartCloseBtn" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div style="padding:1.5rem; border-top:1px solid #ddd;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:700;">
+                Total: <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="submit-btn" id="checkoutBtn" disabled>Checkout</button>
+        </div>
+    </div>
+
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <h3>Order Summary</h3>
+            <div id="orderSummary" style="margin: 15px 0; border-bottom: 1px solid #eee; padding-bottom: 10px;"></div>
+            <form id="checkoutForm">
+                <div class="form-group"><input type="text" id="user_name" placeholder="Name" required></div>
+                <div class="form-group"><input type="email" id="user_mail" placeholder="Email" required></div>
+                <div class="form-group"><input type="tel" id="user_phone" placeholder="Phone" required></div>
+                <button type="submit" id="finalSubmitBtn" class="submit-btn">Place Order</button>
+                <button type="button" id="closeModal" style="width:100%; margin-top:10px; background:none; border:none; cursor:pointer;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // CONFIG
+        const EMAILJS_PUBLIC_KEY = "OEXr6DB6AksxwPWAv";
+        const EMAILJS_SERVICE_ID = "service_ls455um";
+        const EMAILJS_TEMPLATE_ID = "template_mqqxaxg";
+
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+
+        const products = [
+            { id: 1, name: "Wireless Headphones", price: 149, image: "https://images.pexels.com/photos/8000377/pexels-photo-8000377.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 2, name: "Smart Watch Pro", price: 299, image: "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 3, name: "Laptop Backpack", price: 59, image: "https://images.pexels.com/photos/2905238/pexels-photo-2905238.jpeg?auto=compress&cs=tinysrgb&w=600" },
+            { id: 4, name: "Bluetooth Speaker", price: 79, image: "https://images.pexels.com/photos/1279160/pexels-photo-1279160.jpeg?auto=compress&cs=tinysrgb&w=600" }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('shopCart')) || [];
+
+        // UI HELPERS
+        const minS = document.getElementById('minPrice'), maxS = document.getElementById('maxPrice');
+        
+        function updateSliders() {
+            if (parseInt(minS.value) > parseInt(maxS.value) - 20) {
+                if (this === minS) minS.value = maxS.value - 20;
+                else maxS.value = parseInt(minS.value) + 20;
+            }
+            document.getElementById('priceDisplay').textContent = `$${minS.value} - $${maxS.value}`;
+            filterProducts();
+        }
+        minS.oninput = updateSliders; maxS.oninput = updateSliders;
+
+        function displayProducts(items) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = items.map(p => {
+                const isInCart = cart.find(item => item.id === p.id);
+                return `
+                <div class="product-card">
+                    <img src="${p.image}" class="product-image">
+                    <div class="product-info">
+                        <h4>${p.name}</h4>
+                        <p class="product-price">$${p.price}</p>
+                        <button class="add-to-cart-btn ${isInCart ? 'in-cart' : ''}" 
+                                onclick="addToCart(${p.id})">
+                            ${isInCart ? 'In Cart' : 'Add to Cart'}
+                        </button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // CART LOGIC
+        function addToCart(id) {
+            if (cart.find(item => item.id === id)) return;
+            const product = products.find(p => p.id === id);
+            cart.push({ ...product, quantity: 1 });
+            updateCart();
+            filterProducts();
+        }
+
+        window.changeQty = (index, delta) => {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) cart.splice(index, 1);
+            updateCart();
+            filterProducts();
+        };
+
+        window.removeFromCart = (index) => {
+            cart.splice(index, 1);
+            updateCart();
+            filterProducts();
+        };
+
+        function updateCart() {
+            localStorage.setItem('shopCart', JSON.stringify(cart));
+            document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.quantity, 0);
+
+            const itemsCont = document.getElementById('cartItems');
+            let total = 0;
+
+            itemsCont.innerHTML = cart.length === 0 ? '<p style="text-align:center; padding:20px;">Cart is empty</p>' :
+                cart.map((item, idx) => {
+                    total += item.price * item.quantity;
+                    return `
+                    <div class="cart-item">
+                        <img src="${item.image}">
+                        <div style="flex:1">
+                            <div style="font-weight:600; font-size:0.9rem;">${item.name}</div>
+                            <div class="cart-controls">
+                                <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+                                <button class="delete-text-btn" onclick="removeFromCart(${idx})">Delete</button>
+                            </div>
+                        </div>
+                        <div style="font-weight:bold;">$${item.price * item.quantity}</div>
+                    </div>`;
+                }).join('');
+
+            document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('checkoutBtn').disabled = cart.length === 0;
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => p.price >= minS.value && p.price <= maxS.value && p.name.toLowerCase().includes(query));
+            displayProducts(filtered);
+        }
+        document.getElementById('searchInput').oninput = filterProducts;
+
+        // MODAL & SUBMISSION
+        document.getElementById('cartIcon').onclick = () => document.getElementById('cartSidebar').classList.add('active');
+        document.getElementById('cartCloseBtn').onclick = () => document.getElementById('cartSidebar').classList.remove('active');
+        document.getElementById('closeModal').onclick = () => document.getElementById('checkoutModal').classList.remove('active');
+
+        document.getElementById('checkoutBtn').onclick = () => {
+            const summary = cart.map(i => `<div class="summary-row"><span>${i.name} (x${i.quantity})</span><span>$${i.price * i.quantity}</span></div>`).join('');
+            document.getElementById('orderSummary').innerHTML = summary + `<div style="text-align:right; font-weight:bold; margin-top:10px;">Total: ${document.getElementById('cartTotal').textContent}</div>`;
+            document.getElementById('checkoutModal').classList.add('active');
+        };
+
+        document.getElementById('checkoutForm').onsubmit = function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('finalSubmitBtn');
+            btn.disabled = true;
+            btn.textContent = "Sending...";
+
+            const cartString = cart.map(i => `${i.name} (x${i.quantity} - $${i.price * i.quantity})`).join(", ");
+
+            const templateParams = {
+                from_name: document.getElementById('user_name').value,
+                user_email: document.getElementById('user_mail').value,
+                user_phone: document.getElementById('user_phone').value,
+                cart_items: cartString,
+                total_price: document.getElementById('cartTotal').innerText
+            };
+
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(() => {
+                    alert("Order placed successfully! Check your email.");
+                    cart = [];
+                    updateCart();
+                    filterProducts();
+                    this.reset();
+                    document.getElementById('checkoutModal').classList.remove('active');
+                    document.getElementById('cartSidebar').classList.remove('active');
+                })
+                .catch((err) => {
+                    alert("Error sending order: " + JSON.stringify(err));
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.textContent = "Place Order";
+                });
+        };
+
+        // Init
+        displayProducts(products);
+        updateCart();
+    </script>
+</body>
+</html>

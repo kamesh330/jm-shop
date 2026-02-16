@@ -13,37 +13,46 @@
 <body>
 
     <nav>
-        <!-- <div class="logo">Jm spo<span>rts corner</span></div> -->
-     <div class="logo"><span class="starting">J</span>m <span class="starting">S</span>ports <span class="firsting">C</span>orner</div> 
-
+        <div class="logo">Black Friday</div>
         <div class="nav-links">
-            <a href="">Home</a>
-            <a href="./product/productpage.html">Shop</a>
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
-            <a class="cart-icon" id="cartIcon">🛒 <span class="cart-count" id="cartCount">0</span></a>
         </div>
     </nav>
 
-    <section class="offersection">
-        <div class="offertiming-section">
-            <h2>50% OFF</h2>
-            <h1>ON ALL PRODUCTS</h1>
-            <div class="timer" id="countdown">
-                <div class="timer-block"><span id="days">00</span><label>Days</label></div>
-                <div class="timer-block"><span id="hours">00</span><label>Hours</label></div>
-                <div class="timer-block"><span id="minutes">00</span><label>Mins</label></div>
-                <div class="timer-block"><span id="seconds">00</span><label>Secs</label></div>
-            </div>
-            <a href="#shop" class="btn">DISCOVER DEALS</a>
+    <section class="hero">
+
+    <!-- SLIDER IMAGES CONTAINER -->
+    <div class="slider">
+        <div class="offerimg offerimg--1"></div>
+        <div class="offerimg offerimg--2"></div>
+        <div class="offerimg offerimg--3"></div>
+        <div class="offerimg offerimg--4"></div>
+    </div>
+
+    <!-- TEXT CONTENT -->
+    <div class="offertiming-section">
+        <h2>50% OFF</h2>
+        <h1>BLACK FRIDAY SALE</h1>
+
+        <div class="timer" id="countdown">
+            <div class="timer-block"><span id="days">00</span><label>Days</label></div>
+            <div class="timer-block"><span id="hours">00</span><label>Hours</label></div>
+            <div class="timer-block"><span id="minutes">00</span><label>Mins</label></div>
+            <div class="timer-block"><span id="seconds">00</span><label>Secs</label></div>
         </div>
-        <span class="prebtn">⬅</span>
-        <div class=" offerimg offerimg--1"></div>
-        <div class=" offerimg offerimg--2"></div>
-        <div class=" offerimg offerimg--3"></div>
-        <div class=" offerimg offerimg--4"></div>
-        <span class="nextbtn">➡</span>
-    </section>
+
+        <a href="#shop" class="btn">DISCOVER DEALS</a>
+    </div>
+
+    <!-- NAV BUTTONS -->
+    <span class="prebtn">❮</span>
+    <span class="nextbtn">❯</span>
+
+</section>
+
 
     <section class="section" id="shop">
         <div class="section-title">
@@ -53,24 +62,27 @@
         <div class="deals-grid">
             <div class="product-card">
                 <span class="sale-badge">-36%</span>
-                <img src="Cricket-Batting-Gloves-Transparent-Image-2541882821.png" alt="Watch">
+                <img src="Cricket-Batting-Gloves-Transparent-Image-2541882821.png"
+                    alt="Watch">
                 <h3>Chronos Vanguard Watch</h3>
-                <p><del>Rs: 155.00</del> <strong>Rs: 99.00</strong></p>
-                <button class="btn product--btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
+                <p><del>$155.00</del> <strong>$99.00</strong></p>
+                <button class="btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
             </div>
             <div class="product-card">
                 <span class="sale-badge">-29%</span>
-                <img src="Untitled-1.jpgbas1_1c5dd946-500a-4436-8629-81c4435f78ba_2048x-3174265059.jpg" alt="Skincare">
+                <img src="Untitled-1.jpgbas1_1c5dd946-500a-4436-8629-81c4435f78ba_2048x-3174265059.jpg"
+                    alt="Skincare">
                 <h3>Apex Men's Skincare</h3>
-                <p><del>Rs: 140</del> <strong>Rs: 99</strong></p>
-                <button class="btn product--btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
+                <p><del>$140.00</del> <strong>$99.00</strong></p>
+                <button class="btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
             </div>
             <div class="product-card">
                 <span class="sale-badge">-26%</span>
-                <img src="cricket_PNG118-6932735.png" alt="Hair Mask">
+                <img src="cricket_PNG118-6932735.png"
+                    alt="Hair Mask">
                 <h3>Silvara Hair Mask</h3>
-                <p><del>Rs: 95</del> <strong>Rs: 70</strong></p>
-                <button class="btn product-button" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
+                <p><del>$95.00</del> <strong>$70.00</strong></p>
+                <button class="btn" style="margin-top: 10px; padding: 10px 20px;">Add to Cart</button>
             </div>
         </div>
     </section>
@@ -145,6 +157,7 @@
             sliderimage(currentIndex);
 
         })
+        sliderimage(0);
 
 
         function updateTimer() {
