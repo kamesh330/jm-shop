@@ -29,7 +29,7 @@
         <div class="logo"><span>J</span>m <span>S</span>ports Corner</div>
         <div class="nav-right">
             <div class="nav-links" id="navLinks">
-                <a href="./index.html">Home</a>
+                <a href="#">Home</a>
                 <a href="./productpage.html">Shop</a>
                 <a href="#">Contact</a>
             </div>
@@ -272,10 +272,24 @@ document.querySelectorAll('.product--btn, .product-button').forEach(button => {
 
 });
 
-    document.getElementById('cartIcon').addEventListener('click', () => {
-            window.location.href = "./productpage.html";
-            
-        });
+// Mobile Menu Toggle Logic
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('mobile-active');
+    
+    // Optional: Animate hamburger to an 'X'
+    menuToggle.classList.toggle('active');
+});
+
+// Close menu when a link is clicked (optional but recommended)
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('mobile-active');
+    });
+});
+
 
     </script>
 </body>
