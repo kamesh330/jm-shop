@@ -396,10 +396,11 @@ document.getElementById('checkoutForm').onsubmit = function(e) {
     // 2. Build the Product List (This collects EVERY item in the cart)
     let productDetails = "";
     
-   
 cart.forEach((item, index) => {
-    // This part converts 'img/product.png' into 'https://yourwebsite.com/img/product.png'
-    const fullImageUrl = window.location.origin + '/' + item.image;
+    // This creates a full link like: https://kamesh330.github.io/img/your-image.png
+    // We remove './' if it exists in your image path
+    const cleanPath = item.image.replace('./', '');
+    const fullImageUrl = `https://kamesh330.github.io/jm-shop/${cleanPath}`;
 
     productDetails += `*(${index + 1}) ${item.name}*%0A`;
     productDetails += `   Quantity: ${item.quantity}%0A`;
