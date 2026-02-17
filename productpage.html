@@ -233,13 +233,33 @@
         emailjs.init("OEXr6DB6AksxwPWAv");
 
         // Generate 100+ Products
-        const products = Array.from({ length: 100 }, (_, i) => ({
-            id: i + 1,
-            name: i === 0 ? "Wireless Headphones" : `Sports Item ${i + 1}`,
-            price: Math.floor(Math.random() * 400) + 20,
-            image: `https://picsum.photos/seed/${i + 1}/300/300`
-        }));
-
+        // const products = Array.from({ length: 100 }, (_, i) => ({
+        //     id: i + 1,
+        //     name: i === 0 ? "Wireless Headphones" : `Sports Item ${i + 1}`,
+        //     price: Math.floor(Math.random() * 400) + 20,
+        //     image: `https://picsum.photos/seed/${i + 1}/300/300`
+        // }));
+const products=[
+    {
+        id:1,
+        name:"Football",
+        price: 29.99,
+        image: "img/bagwithkit-3645694901.jpg"
+    },
+    {
+        id:2,
+        name:"Basketball",
+        price: 24.99,
+        image: "img/BATTING_PADS_fd80a488-9aa1-4c30-956f-ae6c10ce3da0_700x.webp"
+    }
+    ,
+    {
+        id:3,
+        name:"Tennis Racket",
+        price: 89.99,
+        image: "img/cricket_PNG118-6932735.png"
+    }
+]
         let cart = JSON.parse(localStorage.getItem('shopCart')) || [];
 
         // DOM Elements
@@ -364,28 +384,54 @@
 
         document.getElementById('closeModal').onclick = () => document.getElementById('checkoutModal').classList.remove('active');
 
-        document.getElementById('checkoutForm').onsubmit = function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('finalSubmit');
-            btn.disabled = true; btn.textContent = "Sending...";
 
-            const params = {
-                from_name: document.getElementById('user_name').value,
-                user_email: document.getElementById('user_mail').value,
-                user_phone: document.getElementById('user_phone').value,
-                cart_items: cart.map(i => `${i.name} (${i.quantity})`).join(", "),
-                total_price: document.getElementById('cartTotal').textContent
-            };
+document.getElementById('checkoutForm').onsubmit = function(e) {
+    e.preventDefault();
 
-            emailjs.send("service_ls455um", "template_mqqxaxg", params)
-                .then(() => {
-                    alert("Success! Order placed.");
-                    cart = [];
-                    updateCart();
-                    location.reload(); // Reset UI state
-                })
-                .catch(() => alert("Error placing order."));
-        };
+    // 1. Get User Details
+    const name = document.getElementById('user_name').value;
+    const phone = document.getElementById('user_phone').value;
+    const total = document.getElementById('cartTotal').textContent;
+
+    // 2. Build the Product List (This collects EVERY item in the cart)
+    let productDetails = "";
+    
+   
+cart.forEach((item, index) => {
+    // This part converts 'img/product.png' into 'https://yourwebsite.com/img/product.png'
+    const fullImageUrl = window.location.origin + '/' + item.image;
+
+    productDetails += `*(${index + 1}) ${item.name}*%0A`;
+    productDetails += `   Quantity: ${item.quantity}%0A`;
+    productDetails += `   Price: Rs ${item.price * item.quantity}%0A`;
+    productDetails += `   View Image: ${fullImageUrl}%0A%0A`; 
+});
+
+    // 3. Your WhatsApp Number (Ensure no '+' or '-' signs)
+    const yourWhatsAppNumber = "+919840802449"; 
+
+    // 4. Construct the Final Message
+    const message = `*--- 🏆 JM SPORTS CORNER ORDER ---*%0A%0A` +
+                    `👤 *Customer:* ${name}%0A` +
+                    `📞 *Phone:* ${phone}%0A` +
+                    `--------------------------------%0A` +
+                    `📝 *ORDER LIST:*%0A%0A${productDetails}` +
+                    `--------------------------------%0A` +
+                    `💰 *GRAND TOTAL: ${total}*%0A` +
+                    `--------------------------------%0A` +
+                    `Please click the image links to verify the items!`;
+
+    // 5. Generate the URL and Open WhatsApp
+    // encodeURI ensures special characters in image names don't break the link
+    const whatsappURL = `https://wa.me/${yourWhatsAppNumber}?text=${message}`;
+    
+    window.open(whatsappURL, '_blank');
+
+    // 6. Clear the cart and refresh
+    alert("Order summary generated! Redirecting to WhatsApp...");
+    localStorage.removeItem('shopCart');
+    location.reload();
+};
 
         // Init
         renderGrid();
