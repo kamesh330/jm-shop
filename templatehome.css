@@ -286,7 +286,9 @@
                 padding: 20px; text-align: center; transition: 0.3s;
             }
             .nav-links.mobile-active { left: 0; }
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+            .products-grid {
+                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                 }
             .product-image { height: 160px; }
         }
         /* Field/Kit */
