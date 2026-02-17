@@ -138,18 +138,30 @@
         .modal.active { display: flex; }
         .modal-content { background: white; padding: 25px; border-radius: 12px; width: 100%; max-width: 450px; }
 
-        /* --- Responsive --- */
-        @media (max-width: 768px) {
-            .menu-toggle { display: flex; }
-            .nav-links {
-                position: absolute; top: 100%; left: -100%; width: 100%;
-                background: var(--primary); flex-direction: column;
-                padding: 20px; text-align: center; transition: 0.3s;
-            }
-            .nav-links.mobile-active { left: 0; }
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-            .product-image { height: 160px; }
-        }
+       @media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+
+    .nav-links {
+        display: none; /* Add this: Hide the menu by default on mobile */
+        position: absolute; 
+        top: 100%; 
+        left: 0; /* Changed from -100% for easier visibility */
+        width: 100%;
+        background: var(--primary); 
+        flex-direction: column;
+        padding: 20px; 
+        text-align: center; 
+        transition: 0.3s;
+    }
+
+    /* Add this: Show the menu when the toggle class is added */
+    .nav-links.mobile-active { 
+        display: flex; 
+    }
+
+    .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .product-image { height: 160px; }
+}
     </style>
 </head>
 <body>

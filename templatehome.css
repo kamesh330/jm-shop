@@ -253,31 +253,31 @@
             left: 0;
         }
 
-        /* .offerimg--1 {
+        .offerimg--1 {
             transform: translatex(100%);
-            background-image: url('./img/bagwithkit-3645694901.jpg') !important;
+            /* background-image: url('./img/bagwithkit-3645694901.jpg') !important; */
         }
 
         /* Stadium/Bat */
-        /* .offerimg--2 {
+        .offerimg--2 {
             transform: translatex(200%);
 
-            background-image: url('./img/Cricket-Batting-Gloves-Transparent-Image-2541882821.png') !important;
-        } */
+            /* background-image: url('./img/Cricket-Batting-Gloves-Transparent-Image-2541882821.png') !important; */
+        }
 
         /* Red Ball on Grass */
-        /* .offerimg--3 {
+        .offerimg--3 {
             transform: translatex(300%);
 
-            background-image: url('./img/gift-card-discount-voucher-red-and-white-ad-b-design-template-03619d51d23d10ba0ff17247045e9a41_screen.jpg') !important;
-        } */
+            /* background-image: url('./img/gift-card-discount-voucher-red-and-white-ad-b-design-template-03619d51d23d10ba0ff17247045e9a41_screen.jpg') !important; */
+        }
 
         /* Cricket Gear/Shoes */
-        /* .offerimg--4 {
+         .offerimg--4 {
             transform: translatex(400%);
 
-            background-image: url('./img/gift-card-template-3d-illustration-260nw-2227669727.webp') !important;
-        } */ 
+            /* background-image: url('./img/gift-card-template-3d-illustration-260nw-2227669727.webp') !important; */
+        } 
   @media (max-width: 768px) {
             .menu-toggle { display: flex; }
             .nav-links {
@@ -484,39 +484,26 @@
         .menu-toggle span { width: 25px; height: 3px; background: white; }
 /* --- MOBILE RESPONSIVENESS (Screens smaller than 768px) --- */
 @media (max-width: 768px) {
-    .hamburger {
-        display: block;
-    }
+    .menu-toggle { display: flex; }
 
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 65px; /* Height of the navbar */
+    .nav-links {
+        display: none; /* Add this: Hide the menu by default on mobile */
+        position: absolute; 
+        top: 100%; 
+        left: 0; /* Changed from -100% for easier visibility */
+        width: 100%;
+        background: var(--primary); 
         flex-direction: column;
-        background-color: var(--nav-bg);
-        width: 100%;
-        text-align: center;
-        transition: 0.4s;
-        gap: 0;
-        box-shadow: 0 10px 10px rgba(0,0,0,0.5);
+        padding: 20px; 
+        text-align: center; 
+        transition: 0.3s;
     }
 
-    .nav-menu.active {
-        left: 0;
+    /* Add this: Show the menu when the toggle class is added */
+    .nav-links.mobile-active { 
+        display: flex; 
     }
 
-    .nav-menu li {
-        width: 100%;
-        padding: 20px 0;
-        border-bottom: 1px solid #222;
-    }
-
-    .nav-link {
-        font-size: 1.2rem;
-        display: block;
-    }
-
-    .shop-name {
-        font-size: 1.1rem;
-    }
+    .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .product-image { height: 160px; }
 }
