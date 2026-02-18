@@ -222,33 +222,14 @@
             margin-bottom: 15px;
         }
 
-        @media (max-width: 768px) {
-            .offersection h1 {
-                font-size: 3rem;
-            }
 
-            .banner-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .timer-block {
-                min-width: 70px;
-                padding: 10px;
-            }
-        }
 
         /*   offer setion styling code */
         .offerimg {
             position: absolute;
             width: 100%;
             height: 100%;
-           
+
             top: 0;
             left: 0;
         }
@@ -273,24 +254,12 @@
         }
 
         /* Cricket Gear/Shoes */
-         .offerimg--4 {
+        .offerimg--4 {
             transform: translatex(400%);
 
             /* background-image: url('./img/gift-card-template-3d-illustration-260nw-2227669727.webp') !important; */
-        } 
-  @media (max-width: 768px) {
-            .menu-toggle { display: flex; }
-            .nav-links {
-                position: absolute; top: 100%; left: -100%; width: 100%;
-                background: var(--primary); flex-direction: column;
-                padding: 20px; text-align: center; transition: 0.3s;
-            }
-            .nav-links.mobile-active { left: 0; }
-            .products-grid {
-                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                 }
-            .product-image { height: 160px; }
         }
+
         /* Field/Kit */
 
 
@@ -361,12 +330,13 @@
 
 
         /* Navigation Styles */
-:root {
-    --nav-bg: #000000;
-    --nav-text: #ffffff;
-    --accent-red: #e60000;
-}
-/* 
+        :root {
+            --nav-bg: #000000;
+            --nav-text: #ffffff;
+            --accent-red: #e60000;
+        }
+
+        /* 
 .navbar {
     background-color: var(--nav-bg);
     color: var(--nav-text);
@@ -465,47 +435,209 @@
             z-index: 1000;
         }
 
-        .logo { font-size: 20px; font-weight: 900; text-transform: uppercase; }
-        .logo span { color: var(--accent); }
-
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { color: white; text-decoration: none; font-size: 14px; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-
-        .cart-icon { cursor: pointer; position: relative; font-size: 1.5rem; }
-        .cart-count {
-            position: absolute; top: -5px; right: -10px;
-            background: var(--accent); color: white; border-radius: 50%;
-            width: 20px; height: 20px; font-size: 0.7rem;
-            display: flex; align-items: center; justify-content: center;
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
         }
 
-        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-        .menu-toggle span { width: 25px; height: 3px; background: white; }
-/* --- MOBILE RESPONSIVENESS (Screens smaller than 768px) --- */
-@media (max-width: 768px) {
-    .menu-toggle { display: flex; }
+        .logo span {
+            color: var(--accent);
+        }
 
-    .nav-links {
-        display: none; /* Add this: Hide the menu by default on mobile */
-        position: absolute; 
-        top: 100%; 
-        left: 0; /* Changed from -100% for easier visibility */
-        width: 100%;
-        background: var(--primary); 
-        flex-direction: column;
-        padding: 20px; 
-        text-align: center; 
-        transition: 0.3s;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .cart-icon {
+            cursor: pointer;
+            position: relative;
+            font-size: 1.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+        }
+
+
+        /* Add this: Show the menu when the toggle class is added */
+        .nav-links.mobile-active {
+            display: flex;
+        }
+
+        .products-grid {
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        }
+
+        .product-image {
+            height: 160px;
+        }
+
+        /* --- MOBILE RESPONSIVENESS (Screens smaller than 768px) --- */
+
+
+
+        @media (max-width: 768px) {
+
+            /* .menu-toggle { display: flex; } */
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                transition: 0.3s;
+            }
+
+            .nav-links.mobile-active {
+                right: 0;
+                width: 50%;
+                left: revert;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+
+            .product-image {
+                height: 160px;
+            }
+            .offertiming-section h1{
+                font-size: 3rem;
+                font-weight: 700;
+            }
+            .offersection{
+                height: 70vh;
+            }
+            .deals-grid{
+                grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            }
+            .banner-grid .banner-box{
+                height: 270px;
+            }
+            .btn{
+                padding: 10px 25px;
+            }
+        }
+
+        /* --- MOBILE RESPONSIVENESS (Screens smaller than 768px) --- */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                /* Add this: Hide the menu by default on mobile */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                /* Changed from -100% for easier visibility */
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                transition: 0.3s;
+            }
+             .feature-item p{ font-size: 0.8rem;}
+           .feature-item h4{ font-size: 0.8rem;}
+ .features{
+            grid-template-columns:repeat( auto-fit,minmax(100px,1fr));
+           }
+        }
+
+
+
+
+        /* for device less tha the 540px */
+        @media(max-width:540px){
+          
+           .feature-item i{ font-size: 22px;}
+          
+
+           .banner-grid{ grid-template-columns: 1fr;}
+           .offersection h2{ font-size: 1.5rem;}
+           .offertiming-section h1{
+            font-weight: 500;
+            font-size: 2rem;
+        }
+           .prebtn,.nextbtn{ width: 40px; height: 40px;}
+           .timer-block{
+            min-width: 60px;
+            padding: 10px;
+           }
+        }
+
+@media(max-width:490px){
+    .deals-grid{
+        grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+        grid-template-rows: repeat(auto-fit,minmax(95px,1fr));
     }
+}
 
-    /* Add this: Show the menu when the toggle class is added */
-    .nav-links.mobile-active { 
-        display: flex; 
+
+@media(max-width:425){
+    .section-title h2{ font-size: 1.5rem;}
+    .section-title{
+        margin-bottom: 30px;
     }
+}
 
-    .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-    .product-image { height: 160px; }
+@media(max-width:420px){
+    .offertiming-section h1{margin: 0;}
+    .timer{gap:10px}
+    .timer-block span{ font-size: 1.4rem;}
+    .timer-block{ padding:7px}
+    .media-btn{margin: 20px 0 0 0;}
+    /* .nextbtn,.prebtn{ left: 3px; right: 3px;} */
+}
+
+@media(max-width:375px){
+  .timer{gap:6px}
 }
